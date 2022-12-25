@@ -14,7 +14,7 @@ namespace projectSUDOKU
     public partial class FormGame : Form
     {
         int[,] field;
-        int[,] field1;  // для проверки на пропавшее число
+        int[,] field1;  //для проверки на пропавшее число
         int[,] field2; // игровое поле, которое заполняется
         int CellSize = 40;
         Random rnd = new Random();
