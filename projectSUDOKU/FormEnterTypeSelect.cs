@@ -26,13 +26,13 @@ namespace projectSUDOKU
 
         private void buttonKEYS_Click(object sender, EventArgs e)
         {
-            type = "keys";
+            type = types[0];
             this.Close();
         }
 
         private void buttonNUMPAD_Click(object sender, EventArgs e)
         {
-            type = "numpad";
+            type = types[1];
             this.Close();
         }
 
