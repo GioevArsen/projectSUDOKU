@@ -80,7 +80,7 @@ namespace projectSUDOKU
                     int j = rnd.Next(0, 8);
                     dataGridViewLevel.Rows[i].Cells[j].Value = "";
                     dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(191, 205, 219);
-                    dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Orange;
+                    dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Brown;
                     field1[i, j] = 0;
                     field2[i, j] = 0;
                 }
@@ -92,7 +92,7 @@ namespace projectSUDOKU
                     int i = rnd.Next(0, 8);
                     dataGridViewLevel.Rows[i].Cells[j].Value = "";
                     dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(191, 205, 219);
-                    dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Orange;
+                    dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Brown;
                     field1[i, j] = 0;
                     field2[i, j] = 0;
                 }
