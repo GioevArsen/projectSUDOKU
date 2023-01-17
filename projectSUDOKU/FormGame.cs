@@ -18,15 +18,16 @@ namespace projectSUDOKU
         int[,] field2; // игровое поле, которое заполняется
         int CellSize = 40;
         Random rnd = new Random();
+        string InputType = FormEnterTypeSelect.type;
+
         
-        
+
         public FormGame()
         {
             InitializeComponent();
         }
 
 
-        
         void CreateLevel()
         {
             dataGridViewLevel.RowTemplate.Height = CellSize;
@@ -36,8 +37,25 @@ namespace projectSUDOKU
                 dataGridViewLevel.Columns[i].Width = CellSize;
             }
             dataGridViewLevel.Rows.Add(field.GetLength(0));
-            dataGridViewLevel.Width = field.GetLength(1) * (CellSize) + 3;
+            dataGridViewLevel.Width = field.GetLength(1) * CellSize + 3;
             dataGridViewLevel.Height = field.GetLength(0) * CellSize + 3;
+            
+        }
+
+        bool IsTheGameOver()
+        {
+            bool x = true;
+            for (int i = 0; i < field.GetLength(1); i++)
+            {
+                for (int j = 0; j < field.GetLength(0); j++)
+                {
+                    if (field2[i, j] != field[i, j])
+                    {
+                        x = false;
+                    }
+                }
+            }
+            return x;
         }
 
 
@@ -48,8 +66,9 @@ namespace projectSUDOKU
                 for(int j = 0; j < field.GetLength(1); j++)
                 {
                     field1[i, j] = field[i, j];
+                    field2[i, j] = field[i, j];
                     dataGridViewLevel.Rows[i].Cells[j].Value = field[i, j];
-                    dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(192, 192, 192);
+                    dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(150, 190, 219);
                     dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                     
                 }
@@ -60,9 +79,10 @@ namespace projectSUDOKU
                 {
                     int j = rnd.Next(0, 8);
                     dataGridViewLevel.Rows[i].Cells[j].Value = "";
-                    dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(220, 220, 220);
+                    dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(191, 205, 219);
                     dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Orange;
                     field1[i, j] = 0;
+                    field2[i, j] = 0;
                 }
             }
             for (int j = 0; j < field.GetLength(1); j++)
@@ -71,9 +91,10 @@ namespace projectSUDOKU
                 {
                     int i = rnd.Next(0, 8);
                     dataGridViewLevel.Rows[i].Cells[j].Value = "";
-                    dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(220, 220, 220);
+                    dataGridViewLevel.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(191, 205, 219);
                     dataGridViewLevel.Rows[i].Cells[j].Style.ForeColor = Color.Orange;
                     field1[i, j] = 0;
+                    field2[i, j] = 0;
                 }
             }
         }
@@ -99,7 +120,7 @@ namespace projectSUDOKU
                     {
                         field[i, j] = temp1[j] - 48;
                     }
-                    field2[i, j] = field[i, j];
+                    //field2[i, j] = field[i, j];
                 }
             }
             str.Close();
@@ -117,26 +138,11 @@ namespace projectSUDOKU
             ShowLevel();
         }
 
-        private void dataGridViewLevel_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int clickRow = e.RowIndex;
-            int clickColumn = e.ColumnIndex;
 
-            //UserEnter(clickRow, clickColumn);
-        }
 
-        
+        // -- изменение содержимого ячейки щелканием мыши
 
-        /*private void dataGridViewLevel_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.NumPad3)
-            {
-                dataGridViewLevel.SelectedCells[0].Value = 3;
-            }
-
-        }*/
-
-        private void dataGridViewLevel_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        /*private void dataGridViewLevel_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int row = e.RowIndex;
             int column = e.ColumnIndex;
@@ -166,6 +172,82 @@ namespace projectSUDOKU
                         field2[row, column] = content + 1;
                     }
                 }
+            }
+            
+        }*/
+
+
+        private void dataGridViewLevel_KeyDown(object sender, KeyEventArgs e)
+        {
+            int key = e.KeyValue;
+            int x = dataGridViewLevel.SelectedCells[0].RowIndex;
+            int y = dataGridViewLevel.SelectedCells[0].ColumnIndex;
+            int a;
+            int b;
+            int z;
+            
+
+
+            if(InputType == "numpad")
+            {
+                a = 97;
+                b = 105;
+                z = 96;
+            }
+            else
+            {
+                a = 49;
+                b = 57;
+                z = 48;
+            }
+
+
+            if (field1[x, y] == 0)
+            {
+                if (key < a || key > b)
+                {
+                    MessageBox.Show("Не то нажимаешь!");
+                }
+                else
+                {
+                    dataGridViewLevel.CurrentCell.Value = e.KeyValue - z;
+                    field2[x, y] = Convert.ToInt32(dataGridViewLevel.CurrentCell.Value);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Нельзя изменить! Выбери другую.");
+            }
+        }
+
+        private void buttonENDTHEGAME_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+            for (int i = 0; i < field2.GetLength(1); i++)
+            {
+                for (int j = 0; j < field2.GetLength(0); j++)
+                {
+                    if (field2[i, j] == 0)
+                    {
+                        count++;
+                    }
+                }
+            }
+            if (count == 0)
+            {
+                if (IsTheGameOver())
+                {
+                    MessageBox.Show("Уровень пройден!");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Где-то ошибка!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Не все клетки заполнены!");
             }
         }
     }

@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormEnterTypeSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEnterTypeSelect.Designer.cs">
+      <DependentUpon>FormEnterTypeSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormEnterTypeSelect.resx">
+      <DependentUpon>FormEnterTypeSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormGame.resx">
       <DependentUpon>FormGame.cs</DependentUpon>
     </EmbeddedResource>

@@ -16,7 +16,9 @@ namespace projectSUDOKU
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormEnterTypeSelect());
             Application.Run(new FormGame());
+            
         }
     }
 }
