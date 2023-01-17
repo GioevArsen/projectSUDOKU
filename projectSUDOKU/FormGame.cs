@@ -120,7 +120,6 @@ namespace projectSUDOKU
                     {
                         field[i, j] = temp1[j] - 48;
                     }
-                    //field2[i, j] = field[i, j];
                 }
             }
             str.Close();
